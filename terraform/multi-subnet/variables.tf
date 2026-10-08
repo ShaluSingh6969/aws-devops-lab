@@ -16,33 +16,38 @@ variable "vpc_cidr" {
   default     = "10.60.0.0/16"
 }
 
-variable "public_subnets" {
+variable "subnets" {
   description = "Public subnet configuration"
 
   type = map(object({
-    cidr = string
-    az   = string
+    cidr   = string
+    az     = string
+    public = bool
   }))
 
   default = {
     public_a = {
-      cidr = "10.60.1.0/24"
-      az   = "eu-central-1a"
+      cidr   = "10.60.1.0/24"
+      az     = "eu-central-1a"
+      public = true
     }
 
-    public_c = {
-      cidr = "10.60.3.0/24"
-      az   = "eu-central-1c"
+    public_b = {
+      cidr   = "10.60.2.0/24"
+      az     = "eu-central-1b"
+      public = true
+    }
+
+    private_a = {
+      cidr   = "10.60.11.0/24"
+      az     = "eu-central-1a"
+      public = false
+    }
+
+    private_b = {
+      cidr   = "10.60.12.0/24"
+      az     = "eu-central-1b"
+      public = false
     }
   }
-}
-
-variable "count_subnets" {
-  type = list(string)
-
-  default = [
-    "10.60.10.0/24",
-    "10.60.11.0/24",
-    "10.60.12.0/24"
-  ]
 }
